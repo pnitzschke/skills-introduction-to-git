@@ -58,6 +58,10 @@ function init() {
     .fill(null)
     .map(() => Array(COLS).fill(0));
 
+  // Load high score from localStorage
+  highScore = parseInt(localStorage.getItem("stackOverflownHighScore")) || 0;
+  document.getElementById("high-score").textContent = highScore;
+
   // Set initial target pattern
   setNewTargetPattern();
 
@@ -308,6 +312,13 @@ function clearPattern(startRow, startCol) {
 // Update score display
 function updateScore() {
   document.getElementById("score").textContent = score;
+
+  // Update high score if current score exceeds it
+  if (score > highScore) {
+    highScore = score;
+    document.getElementById("high-score").textContent = highScore;
+    localStorage.setItem("stackOverflownHighScore", highScore);
+  }
 }
 
 // Handle keyboard input
